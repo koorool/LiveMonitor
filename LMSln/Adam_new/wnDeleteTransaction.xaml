@@ -1,0 +1,25 @@
+﻿<Window x:Class="Adam_new.wnDeleteTransaction"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title=" LiveMonitor| Удалить" MouseMove="Window_MouseMove" Height="202" Width="300" Closed="Window_Closed" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" Background="#FFF7F4D6" LayoutUpdated="Activate">
+    <!--Grid Height="174" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions-->
+
+    <Grid Background="White"> <!--.Row="1"-->
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="10,10,10,47" Text="№ транзакции" Style="{DynamicResource WhiteText}" FontSize="18"/>
+            <ComboBox x:Name="cbID" Grid.Column="1" Margin="10,10,10,47"/>
+            <Button Grid.Row="1" Margin="10,38,10,19" Content="Удалить" Click="Delete" Style="{DynamicResource MyButtonStyle-1}" Background="#FFD6D5D5" BorderBrush="{x:Null}"/>
+            <Button Grid.Row="1" Grid.Column="1" Margin="10,38,10,19" Content="Закрыть" Click="Close_w" Style="{DynamicResource MyButtonStyle-1}" Background="#FFD6D5D5" BorderBrush="{x:Null}"/>
+        </Grid>    
+</Window>

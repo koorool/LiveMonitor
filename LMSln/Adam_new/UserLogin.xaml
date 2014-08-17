@@ -1,0 +1,68 @@
+﻿<Window x:Class="Adam_new.UserLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title=" LiveMonitor | Вход" Height="273" Width="260"   Activated="Window_Activated" MouseMove="Window_MouseMove" KeyDown="TextBox_KeyDown" WindowStartupLocation="CenterScreen" Background="#FF8D8A6E" MouseLeftButtonDown="Move" Closed="Window_Closed" LayoutUpdated="Activate" WindowStyle="ToolWindow" ResizeMode="NoResize" BorderThickness="0" SnapsToDevicePixels="True" FontFamily="Calibri">
+
+    <Grid Margin="0,0,0,1">
+        <Grid.Background>
+            <SolidColorBrush Color="White"/>
+        </Grid.Background>
+        <!--Grid.Effect>
+            <DropShadowEffect/>
+        </-->
+        <!--Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+        </>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="58*"/>
+        </Grid.RowDefinitions-->
+
+        <TextBox x:Name="tbLogin" Margin="30,49,30,0" FontSize="20"  BorderBrush="#4C003D5C" Height="33" VerticalAlignment="Top" >
+            <!--  GotFocus="tbLogin_GotFocus" LostFocus="tbLogin_LostFocus" -->
+            <TextBox.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+            </TextBox.Background>
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label  FontSize="20" Foreground="#A4003D5C" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <PasswordBox x:Name="tbPassword" Margin="30,124,30,0" FontSize="20" BorderBrush="#4C003D5C" Height="34" VerticalAlignment="Top" />
+        <!-- LostFocus="tbPassword_LostFocus" GotFocus="tbPassword_GotFocus" -->
+        <Button   Margin="77,192,77,0" Content="Вход" Click="Login" Style="{DynamicResource MyButtonStyle-1}" FontSize="20" BorderBrush="{x:Null}" Foreground="Black" RenderTransformOrigin="-0.706,0.511" ClipToBounds="True" Background="#FFD6D5D5" Height="32" VerticalAlignment="Top" />
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="32,92,0,0" VerticalAlignment="Top" Width="102" FontSize="18"/>
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="32,17,0,0" VerticalAlignment="Top" Width="81" FontSize="18"/>
+        <!--Image Grid.RowSpan="4" Margin="27,25,45,32" Source="User Accounts.png" Grid.ColumnSpan="2" OpacityMask="Black" /-->
+        <!--Grid Grid.ColumnSpan="4" Margin="0,0,-0.3,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+        </Grid-->
+    </Grid>
+</Window>

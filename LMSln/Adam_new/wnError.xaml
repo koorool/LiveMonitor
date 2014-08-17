@@ -1,0 +1,13 @@
+﻿<Window x:Class="Adam_new.wnError"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title=" LiveMonitor | Ошибка" Height="213" Width="274" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SnapsToDevicePixels="True" Topmost="True" FontFamily="Cambria">
+    <Grid SnapsToDevicePixels="True" ClipToBounds="True" Background="#FFECECEC">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tbErrorM" Margin="10,13,10,33" TextWrapping="Wrap" Foreground="Black" FontFamily="Cambria" FontSize="14" Grid.RowSpan="2"><Run Text="Текст ошибки будет отображаться здесь. Ла-ла-ла-ла.. Пурум-пурум. "/><Run Language="ru-ru" Text="Кстати, если вы видите этот текст -- кто-то из разработчиков чего-то напутал :("/></TextBlock>
+        <Button Content="ОК" Grid.Row="1" Click="Close" Margin="66,33,74,15" Style="{DynamicResource MyButtonStyle-1}"/>
+    </Grid>
+</Window>

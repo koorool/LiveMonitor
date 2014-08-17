@@ -1,0 +1,47 @@
+﻿<Window x:Name="window_search" x:Class="Adam_new.wnSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Поиск" MaxHeight="291" Width="220" ResizeMode="NoResize" Topmost="True" IsTabStop="False" Background="#FFDEDEDE" WindowStyle="ToolWindow" Height="267" Activated="Window_Activated" Closed="Window_Closed">
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <Grid x:Name="grid" Margin="0,-24,0,-192">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel x:Name="gSearch" Background="#FFE8E9EA" Visibility="Visible" Margin="0,26,0,191">
+            <StackPanel Margin="10,10,10,10" x:Name="spDateSearch">
+                <TextBox x:Name="tbProjectName" FontSize="20"  Margin="0,10,0,0" Text="Проект" ToolTip="Проект" TabIndex="1" TextChanged="NewSearch" PreviewGotKeyboardFocus="tbProjectName_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbProjectName_PreviewLostKeyboardFocus"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,0" x:Name="spProjectSearch">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="tbCurrency" SelectionChanged="NewSearch_combobox" FontSize="20" Width="76"  Height="32" IsSynchronizedWithCurrentItem="False" SelectedIndex="0">
+                        <ComboBoxItem Content="$€₴" IsSelected="True"/>
+                        <ComboBoxItem Content="UAH"/>
+                        <ComboBoxItem Content="USD"/>
+                        <ComboBoxItem Content="EUR"/>
+                    </ComboBox>
+                    <ComboBox x:Name="tbMarks" SelectionChanged="NewSearch_combobox" FontSize="20"  Width="103" SelectedIndex="0">
+                        <ComboBoxItem Content="Признак" IsSelected="True"/>
+                        <ComboBoxItem Content="б"/>
+                        <ComboBoxItem Content="н"/>
+                        <ComboBoxItem Content="т"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,10" x:Name="spCurrencySearch">
+                <StackPanel Orientation="Horizontal"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,10" x:Name="spFeatureSearch">
+                <TextBox x:Name="tbReceiver" FontSize="20"  Text="Получатель"  ToolTip="Получатель" TextChanged="NewSearch" PreviewGotKeyboardFocus="tbReceiver_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbReceiver_PreviewLostKeyboardFocus"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,10" x:Name="spRKOSearch">
+                <TextBox x:Name="tbWhoReceived" FontSize="20" Text="На кого получено" ToolTip="На кого получено" TextChanged="NewSearch" PreviewGotKeyboardFocus="tbWhoReceived_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbWhoReceived_PreviewLostKeyboardFocus"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,0" x:Name="spBankSearch">
+                <TextBox x:Name="tbBank" FontSize="20" Text="Банк" ToolTip="Банк" TextChanged="NewSearch" PreviewGotKeyboardFocus="tbBank_PreviewGotKeyboardFocus"  PreviewLostKeyboardFocus="tbBank_PreviewLostKeyboardFocus"/>
+            </StackPanel>
+        </StackPanel>        
+    </Grid>
+</Window>

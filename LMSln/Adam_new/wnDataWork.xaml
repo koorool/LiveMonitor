@@ -1,0 +1,282 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Adam_new.MainWindow"
+        Title=" LiveMonitor | Транзакции" x:Name="wMainWindow" MouseMove="Mouse_move"  WindowStartupLocation="CenterScreen" MouseLeftButtonDown="Move" Closed="wMainWindow_Closed"  Background="Black" Width="800" MinWidth="800" MinHeight="600" BorderThickness="0" MaxWidth="1920" MaxHeight="1080" IsHitTestVisible="True" Height="600" FontFamily="Cambria" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStyle="None" KeyDown="wMainWindow_KeyDown">
+    <!--Activated="RefreshTable"-->
+    <!-- SourceUdpated, LayoutUpdated-->
+    <Grid x:Name="gMainGrid" Grid.IsSharedSizeScope="True" UseLayoutRounding="True" Background="White" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Начинаются таблицы. Каждому типу пользователя соответствует таблица-->
+        <Rectangle x:Name="rTabs_Copy" Fill="White" Height="40" VerticalAlignment="Top" Grid.Row="2" Margin="0"/>
+
+        <!--Начинаются таблицы. Каждому типу пользователя соответствует таблица-->
+
+        <Rectangle x:Name="rTabs" Height="35" VerticalAlignment="Top" Grid.Row="1" Fill="#FFECECEC"/>
+        <ContentControl MouseDoubleClick="FullSize">
+            <Rectangle x:Name="rTitle" Height="43" VerticalAlignment="Top">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFCFCDCD" Offset="0"/>
+                        <GradientStop Color="#FFECECEC" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </ContentControl>
+        <!--Начинаются таблицы. Каждому типу пользователя соответствует таблица-->
+        <DataGrid x:Name="dgUser1" AlternationCount="2" AlternatingRowBackground="White" IsReadOnly="True" CanUserAddRows="True" AutoGenerateColumns="False" Grid.Row="2" Margin="5,5,0,5" FontSize="14" FontFamily="Calibri" Background="White" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding Source={StaticResource MyItemsViewSource}}" BorderBrush="{x:Null}" Visibility="Collapsed">
+            <DataGrid.Columns>
+                <DataGridTextColumn SortDirection="Descending" Header="№" Binding="{Binding id_of_transaction}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Имя проекта" Binding="{Binding project_name}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Дата транзакции" Binding="{Binding date, StringFormat=\{0:dd.MM.yyyy\}}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding sum, ConverterCulture=ru-RU, StringFormat=N}"/>
+                <DataGridTextColumn Header="Валюта" Binding="{Binding currency}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Признак" Binding="{Binding marks}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Примечание" Binding="{Binding notes}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="dgUser2" AlternationCount="2" FontFamily="Calibri"  CanUserAddRows="False" IsReadOnly="True" Visibility="Hidden" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="1" Margin="5,5,0,5" FontSize="14" Grid.Column="0" BorderBrush="{x:Null}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn SortDirection="Descending"  Header="№" Binding="{Binding id_of_transaction}"/>
+                <DataGridTextColumn Header="Имя проекта" Binding="{Binding project_name}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Дата транзакции" Binding="{Binding date, StringFormat=\{0:dd.MM.yyyy\}}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding sum, ConverterCulture=ru-RU, StringFormat=N}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Валюта" Binding="{Binding currency}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Признак" Binding="{Binding marks}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Примечание" Binding="{Binding notes}"/>
+                <DataGridTextColumn Header="РКО" Binding="{Binding RKO}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Курс валют" Binding="{Binding rates}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                <DataGridTextColumn Header="Получатель" Binding="{Binding receiver}"/>
+                <DataGridTextColumn Header="На кого получено" Binding="{Binding who_received}"/>
+                <DataGridTextColumn Header="Банк" Binding="{Binding bank}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--Button x:Name="bSearch" Click="SearchListClick" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" MinWidth="25" MinHeight="25" MaxWidth="25" MaxHeight="25" HorizontalAlignment="Left" Margin="165,9,0,0" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Поиск" Height="25" VerticalAlignment="Top">
+            <Button.Background>
+                <ImageBrush ImageSource="Search.bmp" Stretch="UniformToFill"/>
+            </Button.Background>
+        </>
+        <Button x:Name="bLogOut" BorderThickness="0" BorderBrush="{x:Null}" Click="LogOut" Margin="0,9,100,0" Width="26" Foreground="{x:Null}" HorizontalAlignment="Right" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Выход" Height="25" VerticalAlignment="Top">
+            <Button.Background>
+                <ImageBrush ImageSource="Log Out_4.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bSettings" Margin="0,9,130,0"  Click="GoToSettings" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="25" BorderThickness="0" VerticalAlignment="Top" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Менеджер контактов" HorizontalAlignment="Right" Width="25">
+            <Button.Background>
+                <ImageBrush ImageSource="Manager_contacts.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bRefresh" Margin="45,9,0,0" Click="Refresh" BorderBrush="{x:Null}" Foreground="{x:Null}" BorderThickness="0" Padding="0" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Обновить" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25">
+            <Button.Background>
+                <ImageBrush ImageSource="Refresh.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bAdd" Content="" Click="AddNew" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="105,9,0,0" Style="{DynamicResource MyButtonStyle-1}" Visibility="Visible" ToolTip="Добавить транзакцию" >
+            <Button.Background>
+                <ImageBrush ImageSource="Plus.jpg" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bDelete" Content=""  Click="CallDeleteMenu" FontSize="40" BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" Height="25" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="135,9,0,0" Style="{DynamicResource MyButtonStyle-1}" Visibility="Visible" ToolTip="Удалить транзакцию">
+            <Button.Background>
+                <ImageBrush ImageSource="Del.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bPrint" Margin="75,9,0,0"  BorderBrush="{x:Null}" Foreground="{x:Null}" Width="25" BorderThickness="0" HorizontalAlignment="Left" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Печать" Click="Print" Height="25" VerticalAlignment="Top">
+            <Button.Background>
+                <ImageBrush ImageSource="Print.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button-->
+        <Button x:Name="bDReport" Margin="323,0,0,0"  Click="GoToDistributionReports" BorderBrush="{x:Null}" Foreground="Black" Width="180" Height="30" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Отчет по распределению" Background="#FFD6D5D5" Content=" Отчет по распределению" FontSize="16" Grid.Row="1" FontFamily="Calibri"/>
+        <Grid x:Name="gBriefReport" Margin="10,10,0,10" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="135*" MinHeight="237" />
+                <RowDefinition Height="33*" MinHeight="60" />
+                <RowDefinition Height="79*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition MinWidth="148"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="gMinus" Margin="0,0,5,0" Grid.Row="1" Height="50" VerticalAlignment="Top">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE1DDDD" Offset="1"/>
+                        <GradientStop Color="#FFB4ADAD"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <TextBlock Text="Расходы:" FontSize="20" Width="80" HorizontalAlignment="Left" Margin="10,11,0,0" Height="25" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbTotalMinus" FontSize="20" TextAlignment="Right" IsReadOnly="True"  Margin="199,12,10,0" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Right" Height="28" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid x:Name="gPlus" Margin="5,0,10,0" Grid.Column="1" Grid.Row="1" Height="50" VerticalAlignment="Top" >
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE1DDDD" Offset="1"/>
+                        <GradientStop Color="#FFB4ADAD"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <TextBlock  Text="Доходы:" FontSize="20" Width="80" HorizontalAlignment="Left" Margin="10,11,0,0" Height="25" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbTotalPlus" IsReadOnly="True" TextAlignment="Right" Margin="0,10,10,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="160" FontSize="20" Height="30" VerticalAlignment="Top"  />
+            </Grid>
+            <Grid x:Name="gSum" Grid.Row="2" Height="80" VerticalAlignment="Bottom" Margin="5,0,10,0" Grid.Column="1" >
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFE1DDDD" Offset="1"/>
+                        <GradientStop Color="#FFB4ADAD"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <TextBlock Text="Итого:" FontSize="24" FontWeight="Bold" Width="80" HorizontalAlignment="Left" Margin="5,0,0,21" Height="32" VerticalAlignment="Bottom"/>
+                <TextBox x:Name="tbTotalShort" IsReadOnly="True" TextAlignment="Center" Width="190" HorizontalAlignment="Right" Margin="0,21,10,0" FontSize="20"  FontWeight="Bold" Height="38" VerticalAlignment="Top"/>
+            </Grid>
+            <DataGrid x:Name="dgDistributionPercents" AlternationCount="2" IsReadOnly="True" AutoGenerateColumns="False" Grid.Column="0" FontSize="14" RenderTransformOrigin="0.5,0.276" Padding="0,0,0,10" VerticalScrollBarVisibility="Auto" Margin="0,0,5,0" Grid.Row="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Header="Акционер" Binding="{Binding Name}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Процент" Binding="{Binding Percent, StringFormat=\{0\}%}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding sum, ConverterCulture=ru-RU, StringFormat=\{0:N\} $}" Width="*" ElementStyle="{StaticResource RightAlignedCell}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="dgPlus" AlternationCount="2" IsReadOnly="True" AutoGenerateColumns="False" Margin="5,30,10,1" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Binding="{Binding id_of_transaction}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Имя проекта" Binding="{Binding project_name}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat=\{0:dd.MM.yyyy\}}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding sum, ConverterCulture=ru-RU, StringFormat=\{0:N\} $}" ElementStyle="{StaticResource RightAlignedCell}"/>
+                    <DataGridTextColumn Header="Примечание" Binding="{Binding notes}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="dgMinus" IsReadOnly="True" AlternationCount="2" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" Width="Auto" Grid.Row="0" Margin="0,30,5,1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Binding="{Binding id_of_transaction}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Имя проекта" Binding="{Binding project_name}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat=\{0:dd.MM.yyyy\}}" ElementStyle="{StaticResource CenterAlignedCell}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding sum, ConverterCulture=ru-RU, StringFormat=\{0:N\} $}" ElementStyle="{StaticResource RightAlignedCell}"/>
+                    <DataGridTextColumn Header="Примечание" Binding="{Binding notes}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--выделить grid-->
+        <ComboBox x:Name="cbProjectName" Text="Введите проект" SelectedIndex="0" Margin="10,10,0,0" FontSize="16"  SelectionChanged="ReportStart" VerticalAlignment="Top" Height="24" Grid.Row="2" HorizontalAlignment="Left" Width="188"/>
+        <!--TextBlock x:Name="tbAlltime" HorizontalAlignment="Left" Margin="10,29,0,0" TextWrapping="Wrap" Text="За все время" VerticalAlignment="Top" Foreground="White" FontSize="20" Visibility="Hidden" Height="23" Grid.Row="2" Width="114"/!-->
+        <CheckBox x:Name="cbAlltime" HorizontalAlignment="Left" Margin="203,12,0,0" VerticalAlignment="Top" Width="87" Checked="cbAlltime_Checked" Unchecked="cbAlltime_Unchecked" Height="15" Grid.Row="2" RenderTransformOrigin="9.476,-0.933" Content="Все время" FontSize="14"/>
+        <ComboBox x:Name="cbCurrency_Report" HorizontalAlignment="Left" Margin="633,10,0,0" VerticalAlignment="Top" Width="57" Height="24" SelectedIndex="0" SelectionChanged="cbCurrency_Report_SelectionChanged" Grid.Row="2" FontSize="16">
+            <ComboBoxItem Content="$€₴" IsSelected="True"/>
+            <ComboBoxItem Content="UAH"/>
+            <ComboBoxItem Content="USD"/>
+            <ComboBoxItem Content="EUR"/>
+        </ComboBox>
+        <ComboBox x:Name="cbMarks_Report" HorizontalAlignment="Left" Margin="695,10,0,0" VerticalAlignment="Top" Width="87" Height="24" SelectedIndex="0" SelectionChanged="cbCurrency_Report_SelectionChanged" Grid.Row="2" FontSize="16">
+            <ComboBoxItem Content="Признак" IsSelected="True"/>
+            <ComboBoxItem Content="б"/>
+            <ComboBoxItem Content="н"/>
+            <ComboBoxItem Content="т"/>
+        </ComboBox>
+        <DatePicker x:Name="cStartDate" HorizontalAlignment="Left" Margin="303,10,0,0" VerticalAlignment="Top" Width="160" ToolTip="Выберите дату, с которой нужно показать транзакции" Height="24" Grid.Row="2" />
+        <DatePicker x:Name="cFinishDate" HorizontalAlignment="Left" Margin="468,10,0,0" VerticalAlignment="Top" Width="160" ToolTip="Выберите дату, по которую нужно показывать транзакции" SelectedDateChanged="ReportStart" Height="24" Grid.Row="2" />
+        <Button x:Name="bReport" Content="Краткий отчет" FontSize="16" Click="GoToBriefReport" Height="30"  VerticalAlignment="Bottom" Style="{DynamicResource MyButtonStyle-1}" Margin="203,0,0,0" BorderBrush="{x:Null}" Foreground="Black" ToolTip="Краткий отчет" Background="#FFD6D5D5" Grid.Row="1" FontFamily="Calibri" HorizontalAlignment="Left" Width="115"/>
+
+        <!--выделить grid-->
+        <DataGrid x:Name="dgReportDistribution"  AlternationCount="2" IsReadOnly="True" Margin="10,45,10,50" AutoGenerateColumns="False"  Width="Auto" Visibility="Hidden" Grid.Row="2" FontSize="16" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название проекта"  Binding="{Binding Name}" ElementStyle="{StaticResource CenterAlignedCell}"  Width="2*"/>
+                <DataGridTextColumn Header="Процент" Binding="{Binding Percent, StringFormat=\{0\}%}" ElementStyle="{StaticResource CenterAlignedCell}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, ConverterCulture=ru-RU, StringFormat=\{0:N\} $}" ElementStyle="{StaticResource RightAlignedCell}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="gDistributionSum" Margin="10,0,10,10" VerticalAlignment="Bottom" Height="50" Width="Auto" Grid.Row="2" Visibility="Hidden">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE1DDDD" Offset="1"/>
+                    <GradientStop Color="#FFB4ADAD"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TextBlock HorizontalAlignment="Left" Foreground="Black" TextAlignment="Center" Margin="10,0,0,10" TextWrapping="Wrap"  Text="Итого:" VerticalAlignment="Bottom" Height="32" Width="110" FontSize="24" Style="{DynamicResource WhiteText}" FontWeight="Bold"/>
+            <TextBox x:Name="tbTotalSum" Foreground="Black" IsReadOnly="True" Grid.Column="0" Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Right" />
+        </Grid>
+
+        <!--StackPanel x:Name="gSearch" Margin="10,21,10,401" Background="#FF2593AC" Visibility="Visible" Grid.Row="2">
+            <StackPanel.Effect>
+                <DropShadowEffect/>
+            </StackPanel.Effect>
+            <StackPanel Margin="10,0,10,10" x:Name="spDateSearch">
+                <TextBox x:Name="tbProjectName" FontSize="20" TextChanged="NewSearch" Margin="0,10,0,0" Text="Проект" PreviewGotKeyboardFocus="tbProjectName_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbProjectName_PreviewLostKeyboardFocus" ToolTip="Проект"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,10" x:Name="spProjectSearch">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="tbCurrency" FontSize="20" Width="145" SelectionChanged="NewSearch" Height="32" IsSynchronizedWithCurrentItem="False" SelectedIndex="0">
+                        <ComboBoxItem Content="Валюта" IsSelected="True"/>
+                        <ComboBoxItem Content="UAH"/>
+                        <ComboBoxItem Content="USD"/>
+                        <ComboBoxItem Content="EUR"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,10" x:Name="spCurrencySearch">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="tbMarks" FontSize="20" SelectionChanged="NewSearch" Width="145" SelectedIndex="0">
+                        <ComboBoxItem Content="Признак" IsSelected="True"/>
+                        <ComboBoxItem Content="б"/>
+                        <ComboBoxItem Content="н"/>
+                        <ComboBoxItem Content="т"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel!-->
+        <!--StackPanel Margin="10,0,10,10" x:Name="spFeatureSearch">
+                <TextBox x:Name="tbReceiver" FontSize="20" TextChanged="NewSearch" Text="Получатель" PreviewGotKeyboardFocus="tbReceiver_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbReceiver_PreviewLostKeyboardFocus" ToolTip="Отправитель"/>
+            </>
+            <StackPanel Margin="10,0,10,10" x:Name="spRKOSearch">
+                <TextBox x:Name="tbWhoReceived" FontSize="20" TextChanged="NewSearch" Text="На кого получено" PreviewGotKeyboardFocus="tbWhoReceived_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbWhoReceived_PreviewLostKeyboardFocus" ToolTip="Получатель"/>
+            </StackPanel>
+            <StackPanel Margin="10,0,10,0" x:Name="spBankSearch">
+                <TextBox x:Name="tbBank" FontSize="20" TextChanged="NewSearch" Text="Банк" PreviewGotKeyboardFocus="tbBank_PreviewGotKeyboardFocus" PreviewLostKeyboardFocus="tbBank_PreviewLostKeyboardFocus" ToolTip="Банк"/>
+            </StackPanel>
+        </-->
+        <Label x:Name="lTitle" Content="Live Monitor - User1" FontSize="16" Margin="296,5,296,0" Height="28" VerticalAlignment="Top" Width="200" HorizontalContentAlignment="Center" MouseDoubleClick="FullSize" HorizontalAlignment="Center" Background="{x:Null}"/>
+        <!--Button x:Name="bFile" BorderBrush="{x:Null}" Foreground="White" BorderThickness="0" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Дополнительные функции" Background="Black" Content="МЕНЮ" Grid.Row="1" Height="30" VerticalAlignment="Bottom" FontFamily="Calibri" FontSize="16" HorizontalAlignment="Left" Width="73" Click="bFile_Click"/-->
+        <Button x:Name="bMain" Margin="83,0,0,0"  Click="GoToMainWindow" BorderBrush="{x:Null}" Foreground="Black" BorderThickness="0" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Отчет по распределению" Background="White" Content="ГЛАВНАЯ" FontSize="16" Grid.Row="1" Height="30" VerticalAlignment="Bottom" FontFamily="Calibri" HorizontalAlignment="Left" Width="115"/>
+        <Button x:Name="Close" BorderThickness="0" BorderBrush="{x:Null}"  Width="30" Foreground="{x:Null}" HorizontalAlignment="Right" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Выход" Height="21" VerticalAlignment="Top" ClipToBounds="True" SnapsToDevicePixels="True" Click="Close_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Close.png"  Stretch="None"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="bLogOut_Copy1" BorderThickness="0" BorderBrush="{x:Null}"  Width="30" Foreground="{x:Null}" HorizontalAlignment="Right" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Свернуть" Height="21" VerticalAlignment="Top" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0,0,60,0" Click="bLogOut_Copy1_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Minimise.png"  Stretch="Fill"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="Maximize" BorderThickness="0" BorderBrush="{x:Null}" Click="FullSize" Width="30" Foreground="{x:Null}" HorizontalAlignment="Right" Style="{DynamicResource MyButtonStyle-1}" ToolTip="Развернуть" Height="21" VerticalAlignment="Top" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0,0,30,0" RenderTransformOrigin="1.057,0.786">
+            <Button.Background>
+                <ImageBrush ImageSource="Maximise_1.png"/>
+            </Button.Background>
+        </Button>
+        <Menu HorizontalAlignment="Left" FontSize="16" Height="30" Grid.Row="1" VerticalAlignment="Top" Width="73" Margin="5,6,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFFF5D00"  Foreground="White" Grid.RowSpan="2" >
+            <MenuItem Header="Меню" Foreground="Black" Width="73" Height="30" Background="#FFFFBE00">
+                <MenuItem x:Name="MIsearch" Header="Поиск (Ctrl + F)" Click="SearchBarAppear" />
+                <MenuItem x:Name="Distribution_menu" Header="Распределение" Click="GoToDistributions" Margin="-1,0,1,0"/>
+                <MenuItem x:Name="Transaction" Header="Транзакции">
+                    <MenuItem Header="Добавить (Ctrl + N)" Click="AddNew"/>
+                    <MenuItem Header="Изменить (Ctrl + B)" Click="Change"/>
+                    <MenuItem Header="Удалить (Ctrl + D)" Click="CallDeleteMenu"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Печать (Ctrl + P)" Click="Print"/>
+                <MenuItem Header="Обновить (F5)" Click="RefreshTable"/>
+                <MenuItem Header="Настройки" Click="GoToSettings"/>
+                <MenuItem x:Name="AdminSettings" Header="Настройки администратора" Click="Admimsettings" Visibility="Collapsed"/>
+                <Separator/>
+                <MenuItem Header="Выход" Click="LogOut"/>
+                <MenuItem Header="Закрыть (Alt + F4)" Click="Close_Click"/>
+            </MenuItem>
+        </Menu>
+        <Rectangle Grid.Row="3" Fill="#FFF0F0F0"/>
+        <Label x:Name="lStatusBar" Content="Готов" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Bottom" Width="390" Height="20" FontSize="14" RenderTransformOrigin="0.503,0.522" ClipToBounds="True" SnapsToDevicePixels="True" ToolTip="Состояние" Padding="5,0,0,0" VerticalContentAlignment="Center"/>
+        <Image HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="37" Source="icon.png"/>
+    </Grid>
+</Window>
